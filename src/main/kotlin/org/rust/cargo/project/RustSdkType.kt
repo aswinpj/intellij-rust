@@ -168,6 +168,9 @@ class RustSdkType : SdkType("Rust SDK") {
     private fun isMultiRust(sdkHome: String): Boolean = ".multirust" in sdkHome
 
     companion object {
+        val INSTANCE by lazy {
+            SdkType.findInstance(RustSdkType::class.java)
+        }
 
         private val log = Logger.getInstance(RustSdkType::class.java)
 
@@ -181,4 +184,9 @@ class RustSdkType : SdkType("Rust SDK") {
 
         internal val CARGO_METADATA_SUBCOMMAND  = "metadata"
     }
+}
+
+val Sdk.cargoCommandLine: GeneralCommandLine get() {
+    val cargoPath = RustSdkType.INSTANCE.getPathToExecInSDK(homePath!!, RustSdkType.CARGO_BINARY_NAME).absolutePath
+    return GeneralCommandLine(cargoPath)
 }
