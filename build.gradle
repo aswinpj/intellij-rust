@@ -54,6 +54,8 @@ allprojects {
 
     sourceSets {
         main.java.srcDirs += "gen"
+        // FIXME: remove, workaround for https://github.com/JetBrains/gradle-intellij-plugin/issues/73
+        main.java.srcDirs += "src/main/kotlin/"
     }
 
     test {
